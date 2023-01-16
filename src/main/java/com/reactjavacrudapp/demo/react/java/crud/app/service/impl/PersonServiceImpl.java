@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonaServiceImpl extends GenericServiceImpl<Person, Long> implements PersonServiceAPI {
+public class PersonServiceImpl extends GenericServiceImpl<Person, Long> implements PersonServiceAPI {
 
   @Autowired
   private PersonDaoAPI personDaoAPI;
