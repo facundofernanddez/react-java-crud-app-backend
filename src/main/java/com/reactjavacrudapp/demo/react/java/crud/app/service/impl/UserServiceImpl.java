@@ -17,4 +17,10 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
     return userDaoAPI;
   }
 
+  @Override
+  public User getUserByEmail(String email) {
+    //completar la funcion
+    return User;
+  }
+
 }
