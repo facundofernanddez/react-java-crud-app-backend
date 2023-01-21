@@ -6,7 +6,9 @@ import com.reactjavacrudapp.demo.react.java.crud.app.model.dao.api.UserDaoAPI;
 import com.reactjavacrudapp.demo.react.java.crud.app.service.api.UserServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl extends GenericServiceImpl<LoginUser, Long> implements UserServiceAPI {
 
   @Autowired
