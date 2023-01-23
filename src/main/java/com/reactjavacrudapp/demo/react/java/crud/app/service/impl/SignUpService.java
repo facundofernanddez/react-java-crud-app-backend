@@ -1,9 +1,8 @@
 package com.reactjavacrudapp.demo.react.java.crud.app.service.impl;
 
-import com.reactjavacrudapp.demo.react.java.crud.app.enumerations.Role;
 import com.reactjavacrudapp.demo.react.java.crud.app.model.LoginUser;
-import com.reactjavacrudapp.demo.react.java.crud.app.model.dao.api.UserDaoAPI;
 import com.reactjavacrudapp.demo.react.java.crud.app.repository.UserRepository;
+import com.reactjavacrudapp.demo.react.java.crud.app.service.api.UserServiceAPI;
 import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -14,31 +13,27 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SignUpService extends UserServiceImpl implements UserDetailsService {
 
   @Autowired
-  private UserDaoAPI userDaoAPI;
+  private UserServiceAPI userServiceAPI;
   @Autowired
   private UserRepository userRepository;
 
   @Transactional
-  public void signUp(String name, String email, String password, String password2) throws Exception {
-    check(name, email, password, password2);
+  public LoginUser signUp(LoginUser user) throws Exception {
+    check(user.getName(), user.getEmail(), user.getPassword());
 
-    LoginUser user = new LoginUser();
-    user.setName(name);
-    user.setEmail(email);
-    user.setPassword(password);
-    user.setRol(Role.USER);
+    user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
-    userDaoAPI.save(user);
-
+    return userServiceAPI.save(user);
   }
 
-  public void check(String nombre, String email, String password, String password2) throws Exception {
+  private void check(String nombre, String email, String password) throws Exception {
     if (nombre.isEmpty() || nombre == null) {
       throw new Exception("El nombre no puede estar vacio");
     }
@@ -47,9 +42,6 @@ public class SignUpService extends UserServiceImpl implements UserDetailsService
     }
     if (password.isEmpty() || password == null || password.length() <= 5) {
       throw new Exception("La contraseña no puede estar vacio o ser menor a 5 caracteres");
-    }
-    if (!password.equals(password2)) {
-      throw new Exception("Las contraseñas deben ser iguales");
     }
   }
 
