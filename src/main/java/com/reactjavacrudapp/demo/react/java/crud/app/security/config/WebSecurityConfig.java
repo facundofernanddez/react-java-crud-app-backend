@@ -1,8 +1,12 @@
-package com.reactjavacrudapp.demo.react.java.crud.app;
+package com.reactjavacrudapp.demo.react.java.crud.app.security.config;
 
-import com.reactjavacrudapp.demo.react.java.crud.app.service.impl.SignUpService;
+import com.reactjavacrudapp.demo.react.java.crud.app.registration.RegistrationController;
+import com.reactjavacrudapp.demo.react.java.crud.app.service.impl.UserServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,23 +17,38 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurity extends WebSecurityConfigurerAdapter {
+@AllArgsConstructor
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
-  public SignUpService signUpService;
-
+  public RegistrationController signUpService;
+  
   @Autowired
+  private final UserServiceImpl userServiceImpl;
+
+  @Autowired;
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(signUpService)
-            .passwordEncoder(new BCryptPasswordEncoder());
+    auth.authenticationProvider();
   }
+  
+  @Bean
+  public DaoAuthenticationProvider daoAuthenticationProvider(){
+      DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+      
+      provider.setPasswordEncoder();
+      provider.setUserDetailsService(userServiceImpl);
+      
+      return provider;
+  };
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
             .authorizeRequests()
-            .antMatchers("/css/*", "/js/*", "/img/*", "/**")
+            .antMatchers("/api/v*/registration/**") 
             .permitAll()
+            .anyRequest()
+            .authenticated()
             .and().formLogin()
             .loginPage("/login")
             .loginProcessingUrl("/logincheck")

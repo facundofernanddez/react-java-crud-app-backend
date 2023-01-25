@@ -1,7 +1,7 @@
 package com.reactjavacrudapp.demo.react.java.crud.app.controller;
 
 import com.reactjavacrudapp.demo.react.java.crud.app.model.LoginUser;
-import com.reactjavacrudapp.demo.react.java.crud.app.service.impl.SignUpService;
+import com.reactjavacrudapp.demo.react.java.crud.app.registration.RegistrationController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
   @Autowired
-  private SignUpService signUpService;
+  private RegistrationController signUpService;
 
   @PostMapping("/signup")
   public ResponseEntity signUp(@RequestBody LoginUser user) {
