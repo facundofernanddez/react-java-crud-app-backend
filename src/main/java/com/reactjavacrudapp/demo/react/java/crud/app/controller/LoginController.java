@@ -17,25 +17,25 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("*")
 public class LoginController {
 
-  @Autowired
-  private RegistrationController signUpService;
-
-  @PostMapping("/signup")
-  public ResponseEntity signUp(@RequestBody LoginUser user) {
-    try {
-      LoginUser obj = signUpService.signUp(user);
-
-      return new ResponseEntity(obj, HttpStatus.OK);
-
-    } catch (Exception ex) {
-      System.out.println(ex);
-      return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-
-  @GetMapping("/login")
-  public void Login(@RequestBody(required = false) LoginUser user) {
-
-  }
+//  @Autowired
+//  private RegistrationController signUpService;
+//
+//  @PostMapping("/signup")
+//  public ResponseEntity signUp(@RequestBody LoginUser user) {
+//    try {
+//      LoginUser obj = signUpService.signUp(user);
+//
+//      return new ResponseEntity(obj, HttpStatus.OK);
+//
+//    } catch (Exception ex) {
+//      System.out.println(ex);
+//      return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//  }
+//
+//  @GetMapping("/login")
+//  public void Login(@RequestBody(required = false) LoginUser user) {
+//
+//  }
 
 }

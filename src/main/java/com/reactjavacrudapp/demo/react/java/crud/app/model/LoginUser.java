@@ -4,7 +4,6 @@ import com.reactjavacrudapp.demo.react.java.crud.app.enumerations.Role;
 import java.util.Collection;
 import java.util.Collections;
 import javax.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 public class LoginUser implements UserDetails {
@@ -32,15 +30,30 @@ public class LoginUser implements UserDetails {
   )
   private Long id;
   @Column
-  private String username;
+  private String firstName;
+  @Column
+  private String lastName;
   @Column
   private String email;
   @Column
   private String password;
   @Enumerated(EnumType.STRING)
   private Role rol;
-  private Boolean locked;
-  private Boolean enabled;
+  private Boolean locked = false;
+  private Boolean enabled = false;
+
+  public LoginUser(
+          String firstName,
+          String lastName,
+          String email,
+          String password,
+          Role rol) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+    this.rol = rol;
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -49,9 +62,17 @@ public class LoginUser implements UserDetails {
     return Collections.singletonList(authority);
   }
 
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
   @Override
   public String getUsername() {
-    return username;
+    return email;
   }
 
   @Override
