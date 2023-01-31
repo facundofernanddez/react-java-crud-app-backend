@@ -3,6 +3,7 @@ package com.reactjavacrudapp.demo.react.java.crud.app.registration.token;
 import com.reactjavacrudapp.demo.react.java.crud.app.model.LoginUser;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@Entity
 public class ConfirmationToken {
 
   @Id
@@ -33,6 +35,8 @@ public class ConfirmationToken {
   private LocalDateTime createAt;
   @Column(nullable = false)
   private LocalDateTime expiresAt;
+  @Column
+  private LocalDateTime confirmedAt;
 
   @ManyToOne
   @JoinColumn(

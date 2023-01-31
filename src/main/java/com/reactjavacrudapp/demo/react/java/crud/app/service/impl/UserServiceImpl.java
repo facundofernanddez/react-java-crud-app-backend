@@ -63,7 +63,12 @@ public class UserServiceImpl extends GenericServiceImpl<LoginUser, Long> impleme
 
     confirmationTokenService.saveConfirmationToken(confirmationToken);
 
+    //TODO: send email
     return token;
+  }
+
+  public int enableLoginUser(String email) {
+    return userRepository.enableLoginUser(email);
   }
 
 }
