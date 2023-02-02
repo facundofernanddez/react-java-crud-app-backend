@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<LoginUser, Long> {
 
   @Transactional
   @Modifying
-  @Query("SELECT a FROM LoginUser a SET a.enabled = true WHERE a.email = :email")
+  @Query("UPDATE LoginUser a SET a.enabled = true WHERE a.email = :email")
   int enableLoginUser(@Param("email") String email);
 
 }

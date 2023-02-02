@@ -1,37 +1,31 @@
 package com.reactjavacrudapp.demo.react.java.crud.app.registration;
 
-import com.reactjavacrudapp.demo.react.java.crud.app.model.LoginUser;
-import com.reactjavacrudapp.demo.react.java.crud.app.repository.UserRepository;
-import com.reactjavacrudapp.demo.react.java.crud.app.service.api.UserServiceAPI;
-import java.util.ArrayList;
-import java.util.List;
-import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "api/v1/registration")
 @AllArgsConstructor
-public class RegistrationController{
-    
-    @Autowired
-    private final RegistrationService registrationService;
-    
-    @PostMapping
-    public String register(@RequestBody RegistrationRequest request){
-        return registrationService.register(request);
-    }
+public class RegistrationController {
+
+  @Autowired
+  private final RegistrationService registrationService;
+
+  @PostMapping
+  public String register(@RequestBody RegistrationRequest request) {
+    return registrationService.register(request);
+  }
+
+  @GetMapping(path = "confirm")
+  public String confirm(@RequestParam("token") String token) {
+    return registrationService.confirmToken(token);
+  }
 
 //  @Autowired
 //  private final UserServiceAPI userServiceAPI;
@@ -59,7 +53,6 @@ public class RegistrationController{
 //      throw new Exception("La contraseña no puede estar vacio o ser menor a 5 caracteres");
 //    }
 //  }
-
 //  @Override
 //  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 //
