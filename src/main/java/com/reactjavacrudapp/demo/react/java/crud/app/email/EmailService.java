@@ -30,8 +30,9 @@ public class EmailService implements EmailSender {
       helper.setTo(to);
       helper.setSubject("Confirm your email");
       helper.setFrom("no-reply@facundocrudapp.com");
+      javaMailSender.send(mimeMessage);
     } catch (MessagingException e) {
-      LOGGER.error("failed to send email", email);
+      LOGGER.error("failed to send email", e);
       throw new IllegalStateException("filed to send email");
     }
   }
