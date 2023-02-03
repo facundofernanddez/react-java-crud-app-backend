@@ -45,6 +45,7 @@ public class UserServiceImpl extends GenericServiceImpl<LoginUser, Long> impleme
     Boolean userExists = userRepository.findUserByEmail(loginUser.getEmail()) != null;
 
     if (userExists) {
+//    TODO: hacer que si el usuario no confirmó el mail, se pueda volver a registrar sin tirar error.
       throw new IllegalStateException("Email ya existe");
     }
 
@@ -63,7 +64,6 @@ public class UserServiceImpl extends GenericServiceImpl<LoginUser, Long> impleme
 
     confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-    //TODO: send email
     return token;
   }
 
